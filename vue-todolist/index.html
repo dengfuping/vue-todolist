@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="bookmark" href="images/favicon.ico" />
+    <meta charset="UTF-8">
+    <title>TodoList | Vue.js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .completed {
+            color: #4cae4c;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Vue.js 2.0 | TodoList</a>
+    </div>
+</nav>
+
+<div id="todoapp" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Welcome to My TodoList</div>
+            <div class="panel-body">
+                    <h2>My Todos {{todoCount}}</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item" v-for="(todo, index) in todos" v-bind:class="{'completed': todo.completed}">
+                            {{todo.title}}
+                            <button style="margin-left: 20px" class="btn btn-warning btn-xs pull-right" v-on:click="deleteTodo(index)">Delete</button>
+                            <button class="btn btn-info btn-xs pull-right" v-on:click="toggleCompletion(index)" v-bind:class="[todo.completed ? 'btn-danger':'btn-info']">{{todo.completed ? 'Undo':'Done'}}</button>
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="form-group">
+                            <input type="text" v-model="newTodo.title" class="form-control" placeholder="enter your todo here"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" v-on:click="addTodo()">Add Todo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/vue.min.js"></script>
+<script>
+    var todoapp = new Vue({
+        el: '#todoapp',
+        data: {
+            todos: [],
+            newTodo: {
+                id: null, title: '', completed: false
+            }
+        },
+        computed: {
+            todoCount: function () {
+                return this.todos.length;
+            }
+        },
+        methods: {
+            addTodo: function () {
+                this.todos.push(this.newTodo);
+                this.newTodo = {id: null, title: '', completed: false};
+            },
+            deleteTodo: function (index) {
+                this.todos.splice(index, 1);
+            },
+            toggleCompletion: function (index) {
+                this.todos[index].completed = !this.todos[index].completed;
+            }
+        }
+    })
+</script>
+</body>
+</html>
