@@ -31,14 +31,14 @@
         props: ['todos'],
         methods: {
             deleteTodo: function (todo, index) {
-                this.axios.delete('http://localhost:8000/api/todo/' + todo.id + '/delete', ).then(response => {
+                this.axios.delete('http://localhost:8000/api/todo/' + todo.id + '/delete').then(response => {
                     console.log(response.data);
                     this.todos.splice(index, 1);
                 });
 
             },
             toggleCompletion: function (todo) {
-                this.axios.patch('http://localhost:8000/api/todo/' + todo.id + '/completed', ).then(response => {
+                this.axios.patch('http://localhost:8000/api/todo/' + todo.id + '/completed').then(response => {
                     console.log(response.data);
                     todo.completed = !todo.completed;
                 });
